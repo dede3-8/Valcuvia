@@ -1,0 +1,1367 @@
+
+\documentclass{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,235mm},
+ left=30mm,
+ top=35mm,
+ right=30mm
+ }
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{imakeidx}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{float}
+ \usepackage{setspace}
+ \usepackage[italian]{babel}
+\usepackage[fixlanguage]{babelbib}
+ \usepackage[official]{eurosym}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=black,
+    pdfpagemode=FullScreen,
+    }\setlength{\parindent}{0pt}
+\renewcommand*\contentsname{Indice dei contenuti}
+\makeindex
+\begin{document}
+\begin{titlepage}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\center
+\begin{figure}[H]
+\centering
+\includegraphics[width=9cm, height=6cm]{logopolimi}
+\end{figure}	
+\textsc{\Large Tecnica ed economia \\dei trasporti}\\[0.5cm] 
+
+\HRule\\[0.2cm]
+\center
+{\LARGE\bfseries Studio di fattibilità\\
+\vspace{1mm}
+ tramvia della Valcuvia}\\[0.5cm]
+\HRule\\[0.5cm]
+	\begin{minipage}{0.4\textwidth}
+			\large
+			\begin{flushleft}
+			\textit{Autori}\\
+			\textsc{roberta castellucchio\\
+			federico gazzetta\\
+			davide libera\\
+			fabrizio pellitteri\\
+			alyssa uguccioni} 
+			\end{flushleft}
+	\end{minipage}
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright}
+			\large
+			\textit{Supervisore}\\
+			\textsc{Prof. Maja Roberto} 
+		 \end{flushright}
+	\end{minipage}
+
+\renewcommand*\contentsname{Summary}
+\
+\bigskip
+\bigskip
+
+\end{titlepage}
+
+
+
+\begin{abstract}
+I problemi di trasporto non interessano solamente in grandi e medi centri urbani, ma sono di particolare rilevanza anche nei territori più periferici, la Valcuvia è uno di questi, dove, anche a causa di un territorio geograficamente sfavorevole, la mobilità presenta diverse criticità, infatti nonostante la popolazione relativamente scarsa un elevato traffico automobilistico è costantemente presente durante i giorni feriali lungo l'arteria principale; questo è sostanzialmente dovuto, come in molte altre realtà del nostro paese, al fatto che non sono presenti alternative competitive con l'automobile, infatti l'unico servizio di TPL sono le poche corse offerte da due autolinee, con tempi e frequenze non allettanti per la maggior parte delle persone, esclusi gli studenti.\\
+Questo studio si pone l'obiettivo di cercare e analizzare delle possibili soluzioni al problema, per portare ad un miglioramento non solo della mobilità, ma anche a miglioramenti nella sicurezza e nella qualità dell'aria della zona, aumentando la qualità della vita dei suoi abitanti.\\
+La soluzione principale discussa e analizzata è una moderna linea tramviaria, per via delle prestazioni elevate che questa moderna soluzione può offrire ma anche per continuità storica, infatti la zona era già servita da una linea tramviaria costruita ai primi del '900 e poi dismessa negli anni cinquanta, come purtroppo molte altre in Italia.\\
+Lo studio di fattibilità inizia con un'analisi della situazione attuale dell'offerta di trasporto e della domanda di mobilità, attraverso lo studio delle matrici O/D.\\
+Per il dimensionamento del servizio, partendo dai dati della matrice O/D, per ricavare la domanda potenziale si è sviluppato un modello di scelta modale di tipo Logit Multinomiale, calibrato attraverso un'indagine SP, in cui vengono offerti degli scenari comparativi tra l'autovettura privata e la nuova tramvia.\\
+In seguito viene effettuata una breve analisi finanziaria per verificare i costi di costruzione e produzione del servizio e per l'adozione di un idoneo sistema tariffario.\\
+Infine viene effettuata una comparazione tra la soluzione della tramvia e un più economico servizio di moderni autobus elettrici lungo il medesimo percorso. 
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+\section{Introduzione}
+\subsection{Inquadramento dell'area di intervento}
+\begin{figure}[H]
+\centering
+\includegraphics[width=11cm, height=7.5cm]{map}
+\caption{Localizzazione dell'area di progetto} 
+\end{figure}
+La Valcuvia è un'importante valle prealpina della provincia di Varese, che si sviluppa quasi in parallelo al lago Maggiore, tra le località di Luino e Cittiglio. La zona è caratterizzata dalla presenza di numerosi centri abitati, tutti però di piccole dimensioni e principalmente collocati sul fondovalle lungo la strada principale. Dal punto di vista economico la valle offre soprattutto attività di tipo agricolo, l'unica industria degna di nota è la Mascioni S.P.A , un'azienda del settore tessile a Cuvio; le attività commerciali sono presenti in modeste quantità e sopratutto nei pressi di Luino e Mesenzana. Per via delle poche opportunità che offre la valle i residenti della zona sono principalmente impiegati nella parte meridionale della provincia di Varese o in quella di Milano, numerosi sono anche i frontalieri che lavorano nel vicino Canton Ticino in Svizzera.\\
+Dal punto di vista turistico l'unica località degna di nota è Luino, per via della posizione scenografica sul Lago Maggiore.\\
+\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=7cm, height=6cm]{panorama}
+\caption{Panorama della vallata} 
+\end{figure}
+
+
+Di seguito una lista dei principali comuni della zona, con indicata la popolazione:\\
+\
+\begin{table}[H]
+{\centering
+\renewcommand\tabularxcolumn[1]{m{#1}}
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\hline
+ \textbf{Comune} & \textbf{Popolazione} \\
+\noalign{\hrule height 1.2pt}
+ Azzio & 779 \\
+ \hline
+Bedero Valcuvia  & 665\\
+\hline
+Brenta & 1708\\
+\hline
+Casalzuigno & 1371\\
+\hline
+Cassano Valcuvia & 669 \\
+ \hline
+Cittiglio & 3923 \\
+\hline
+Cuveglio& 3371\\
+\hline
+Cuvio & 1655\\
+\hline
+Ferrera di Varese & 732 \\
+ \hline 
+Germignaga & 220\\
+\hline
+Grantola & 1288 \\
+ \hline
+Laveno-Mombello & 8743 \\
+\hline
+Luino& 14664\\
+\hline
+Mesenzana & 1523\\
+\hline
+Montegrino Valtravaglia & 1472 \\
+ \hline  
+Rancio Valcuvia & 919\\ 
+\hline
+\textbf{Totale} &\textbf{43702}\\
+\hline
+\end{tabularx}}
+\caption{Lista comuni della Valcuvia}
+\end{table}
+\subsection{Breve intermezzo storico}
+Nei primi del 900' si decise di aprire una linea tranviaria che servisse la zona, non servita della ferrovie di recente costruzione quali quella della Valganna (ora dismessa) e quella lungo la sponda orientale del lago Maggiore (tutt'ora in uso).
+La tranvia venne aperta nel 1914, dapprima a trazione termica successivamente elettrificata nel 1917 a 600 V cc; lo scartamento era pari a 1100 mm e la lunghezza di 13,7 km, dalla stazione ferroviaria di Cittiglio a Molino d'Anna, nel comune di Bosco Valtravaglia, percorreva il lato destro della strada statale 394 e attraversava tutti i principali centri della valle.
+Fu chiusa nel 1949, quando fu preferito, sfortunatamente, uno smantellamento ad un necessario rinnovamento degli impianti e del materiale rotabile.
+
+\begin{figure}[H]
+\subfloat{\includegraphics[width=10cm, height=7cm]{tranviavecchia}}
+\qquad
+\subfloat{\includegraphics[width=4.5cm, height=7cm]{tranviavecchiafermate}}
+\caption{Mappa e fermate della linea tranviaria originale  \cite{wiki}}
+\end{figure}
+
+\begin{figure}[H]
+\subfloat[Capolinea di Molino d'Anna]{\includegraphics[width=8.5cm, height=6cm]{Molinod'Anna}}
+\qquad
+\subfloat[Canonica di Cuvio]{\includegraphics[width=8cm, height=6cm]{cuvio}}
+\qquad
+\subfloat[Brenta]{\includegraphics[width=8cm, height=6cm]{Brenta}}
+\qquad
+\subfloat[Zuigno]{\includegraphics[width=8cm, height=6cm]{Zuigno}}
+\caption{Alcune foto dell'epoca  \cite{wiki}}
+\end{figure}
+
+
+\section{Viabilità/Accessibilità attuale}
+
+\subsection{Rete stradale} 
+La Valcuvia è attraversata per tutta la sua lunghezza unicamente dalla strada statale 394 del Verbano orientale, che collega Varese al confine italo-svizzero di Zenna; il tratto valcuviano è lungo 18 km, dall'abitato di Cittiglio a Luino.\\
+La carreggiata è costituita da una corsia per senso di marcia, e non attraversa direttamente in centri dei paesi (eccetto cuveglio), in questo modo si mantiene rettilinea e scorrevole, con il limite di velocità per buona parte a 70 Km/h, tuttavia sono presenti numerose rotonde lungo il percorso.\\
+Oltre alla strada statale vi sono numerose strade provinciali, le più importanti delle quali: la SP62, che collega Rancio Valcuvia a Varese e la SP43 che collega Grantola a Ghirla.\\
+Numerose strade secondarie collegano il fondovalle alle frazioni situate su entrambi i versanti.
+\begin{figure}[H]
+\centering
+\includegraphics[width=11cm, height=7.5cm]{ss394}
+\caption{Vista della SS394 tra Brenta e Casalzuigno \cite{gmaps}} 
+\end{figure}
+\subsection{Rete ferroviaria}
+La Valcuvia non è attraversata direttamente da nessuna linea ferroviaria, tuttavia è lambita da due di media importanza.\\
+Cittiglio, il primo paese della valle provenendo da sud, è attraversato dalla ferrovia Saronno-Laveno, che collega il lago  Maggiore con l'importante nodo ferroviario di Saronno passando per Varese e da cui poi prosegue per Milano Cadorna. Tale linea è a semplice binario fino a Malnate ed elettrificata a 3000 V in cc, è gestita da Ferrovie Nord Milano.\\
+Questa linea è percorsa dai treni regionali Milano-Saronno-Varese-Laveno, di Trenord, che effettuano tutte le fermate (treno \textbf{R22}) e dai treni regionali espressi, sempre di Trenord lungo il medesimo percorso che effettuano tutte le fermate solo tra Malnate e Laveno (treno \textbf{RE1}).\\
+Tra le 6 e le 9 la frequenza è di un treno ogni mezz'ora, in direzione Milano, e tra le 18 e le 20:30, in direzione Laveno.\\
+Laveno e Luino sono inoltre collegati dalla ferrovia Novara-Pino, che percorre tutta la riva orientale del Verbano, e si collega alla linea svizzera per Cadenazzo, quindi successivamente alle linea per Locarno e all'importante linea del San Gottardo.Quest'ultima linea è a binario semplice ed elettrificata a 3000 V in cc fino a Luino e successivamente a 15 kV in ca (tensione tipica della rete svizzera), è gestita da RFI.\\
+Questa linea è servita dal treno \textbf{R21} di Trenord, che collega Luino alla stazione di Milano Porta Garibaldi (tuttavia limitato a Gallarate nelle ore di morbida), Laveno inoltre è il capolinea della linea \textbf{R24}, sempre di Trenord, che la collega a Sesto Calende, tuttavia questo collegamento è attualmente effettuato con autobus. Oltre ai collegamenti di Trenord è presente anche la linea \textbf{S30} di Tilo, che collega Cadenazzo (nel canton Ticino) a Gallarate passando per Luino e Laveno. Su questa linea è importante anche il traffico merci, visto il collegamento con la linea del San Gottardo.
+
+\begin{figure}[H]
+\centering
+\subfloat[TSR Trenord alla stazione di Laveno lago \cite{tsr}]{\includegraphics[width=7cm, height=4cm]{laveno}}
+\qquad
+\subfloat[Stadler Flirt Tilo alla stazione di Luino \cite{tilo}]{\includegraphics[width=6cm, height=4cm]{tilo}}
+\caption{Tipologie di Rotabili circolanti}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=11cm, height=9cm]{rails}
+\caption{Mappa ferroviaria della zona \cite{orm}}
+\end{figure}
+\newpage
+\subsection{Autolinee}
+\begin{figure}[H]
+\centering
+\includegraphics[width=6cm, height=4cm]{lineabus}
+\caption{Bus della linea N10}
+\end{figure}
+La principale linea di Autobus della Valcuvia è la \textbf{N15}, che percorre tutta la valle lungo la statale 394 da Luino a Cittiglio attraversando tutti i principali centri abitati essa è gestita da \textit{Autolinee Varesine Srl}.\\
+Durante il periodo scolastico nei giorni feriali le corse sono effettuate tra le 6:00 e le 19:00, vi è una corsa ogni mezz'ora durante l'ora di punta tra le 6:00 e le 9:00, con una frequenza ridotta ad una corsa ogni 2 ore a metà giornata per poi aumentare ad una corsa ogni ora nell'ora di punta serale. Gli arrivi e partenze dalla stazione di Cittiglio sono programmati in coincidenza coi treni per e da Milano.\\
+Altre autolinee completano l'offerta della Valcuvia: la linea \textbf{N13} che collega Cuveglio con direttamente Varese passando per Rancio e Bedero, e la linea \textbf{N10} che collega Varese e Luino passando dalla Valganna, e segue il medesimo percorso della Linea N15 tra Grantola e Luino.
+\begin{figure}[H]
+\centering
+\includegraphics[width=11cm, height=9cm]{bus}
+\caption{Mappa delle autolinee della zona \cite{va}}
+\end{figure}
+\newpage
+
+\section{Analisi della domanda}
+In questa sezione viene fatta una breve analisi della domanda di trasporto nella zona. Tutti i dati in seguito riportati sono ottenuti attraverso l'analisi della matrice O/D fornita da regione Lombardia, la versione più recente, ossia quella aggiornata al 2016. La matrice fornisce i dati degli spostamenti generati da ogni singolo comune della regione in un giorno lavorativo tipo, fornendo per coppia O/D le seguenti informazioni:
+ \begin{multicols}{2}
+ \begin{itemize}
+\item provincia origine;
+\item zona origine;
+\item provincia destinazione;
+\item zona destinazione;
+\item fascia oraria;
+\item motivo dello spostamento;
+\item mezzo usato per lo spostamento;
+\end{itemize}
+\end{multicols}{2}
+ \subsection{Distribuzione dei flussi}
+\begin{figure}[H]
+\centering
+\includegraphics[width=8cm, height=7cm]{trattemax}
+\caption{Direttrici di massimo traffico}
+\end{figure}
+Analizzando le direttrici più cariche, come mostrato nella precedente cartina, si nota che la maggior parte degli spostamenti generati dai comuni della Valcuvia sono in direzione della città di Varese, capoluogo provinciale, sono inoltre notevoli anche quelli verso la Svizzera (canton Ticino) e verso Milano.\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm, height=5cm]{distribuzionetempo}
+\caption{Distribuzione giornaliera degli spostamenti}
+\end{figure}
+Analizzando invece la distribuzione giornaliera si notano invece due picchi, uno più elevato il mattino tra le 7 e le 9, per gli spostamenti tra i comuni della Valcuvia e verso Varese e Milano, ed un altro, più basso ma più esteso tra le 17 e le 20 corrispondente ai ritorni della giornata.\\
+Da questa distribuzione si desume molto chiaramente che la domanda di spostamento generata dalla zona è prevalentemente di tipo pendolare, con un'elevata regolarità.
+\subsection{Analisi degli spostamenti}
+Il fatto che la domanda sia prevalentemente di tipo pendolare è confermato anche dai motivi degli spostamenti durante il picco della mattina, come ben si vede nel seguente grafico:
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm, height=6cm]{motivi}
+\caption{Motivi degli spostamenti}
+\end{figure}
+Si nota bene come lavoro e studio costituiscano da soli oltre il 94\% del totale.
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm, height=6cm]{mezziusati}
+\caption{Mezzi usati per gli spostamenti}
+\end{figure}
+Come si vede l'auto è di gran lunga il mezzo più usato dagli abitanti della zona per compiere i loro spostamenti quotidiani, questo è spiegabile principalmente con la scarsa offerta attuale di TPL, l'unica autolinea presente nella valle opera con frequenze troppo basse e per un numero troppo limitato di ore per essere attrattiva, infatti oggi gli unici utenti che la utilizzano sono presumibilmente solo studenti.\\
+Ovviamente, questa grande frazione di spostamenti in auto porta a vari problemi: 
+\begin{itemize}
+\item traffico elevato durante le ore di punta, viste la capacità delle poche strade della zona
+\item inquinamento, sia atmosferico che anche acustico;
+\item sicurezza, essendo il trasporto stradale tra i più pericolosi.
+\end{itemize}
+\newpage
+\section{Modellizzazione}
+\subsection{Formulazione del modello}
+Le alternative modali che verranno confrontate nel presente studio sono due: il servizio autoprodotto per mezzo della propria autovettura e un nuovo servizio che ancora non esiste.\\
+La domanda potenziale, ovvero i potenziali utenti del nuovo servizio, si ricava attraverso un modello di scelta modale. Consideriamo la struttura Logit Multinomiale, definita dalla seguente equazione:
+\begin{equation}
+p^{q}[J]=\frac{e^{V^{q}_{j}/\theta}}{\sum^{m}_{i=1}e^{V^{q}_{i}/\theta}}
+\end{equation}
+La probabilità che un utente q scelga un’alternativa j dipende dall’utilità sistematica delle varie alternative e dal parametro $\theta$ del modello. Al denominatore si trovano tutte le alternative, mentre al numeratore c’è l’alternativa j di cui si vuole conoscere la probabilità di scelta.\\
+Introduciamo l’utilità sistematica:
+\begin{equation}
+V^{q}_{i}=\sum_{k}\beta_{k}\cdot X^{q}_{ki}
+\end{equation}
+\begin{itemize}
+\item$\beta_{k}$: coefficienti (oltre a $\theta$) da determinare attraverso la calibrazione;
+\item$X^{q}_{ki}$: attributi che caratterizzano le alternative.
+\end{itemize}
+Sostituendo l’espressione dell’utilità sistematica, l’equazione della probabilità diventa:
+\begin{equation}
+p^{q}[j]=\frac{e^{\sum_{k}\beta^{q}_{k}\cdot X^{q}_{kj}/\theta}}{\sum^{m}_{i=1}e^{\sum_{k}\beta_{k}^{q}\cdot X^{q}_{ki}/\theta}}
+\end{equation}
+Precendentemente si è detto che i coefficienti da stimare sono $\beta$ e $\theta$, tuttavia quelli davvero indipendenti sono in numero $\beta+\theta-1$. Indicando con $\alpha$ il rapporto tra $\beta$ e $\theta$:
+\begin{equation}
+p^{q}[j]=\frac{e^{\sum_{k}\alpha^{q}_{k}\cdot X^{q}_{kj}}}{\sum^{m}_{i=1}e^{\sum_{k}\alpha_{k}^{q}\cdot X^{q}_{ki}}}
+\label{equation}
+\end{equation}
+Dato che le alternative modali da confrontare sono due, il modello è un Logit Binomiale.\\
+È fondamentale ora specificare il modello, ossia decidere quali attributi considerare per ciascuna delle due alternative.
+\subsection{Scelta degli attributi}
+Il nuovo servizio e l’uso dell’autovettura hanno due attributi in comune: il tempo di viaggio e il costo. Quest’ultimo, in particolare, comprende per il nuovo servizio il solo costo del biglietto, mentre per l’uso dell’automobile comprende il costo del carburante e quello del parcheggio. Il trasporto collettivo, inoltre, è caratterizzato dal tempo di accesso alla fermata (inteso come il tempo necessario per percorrere lo spazio tra la propria abitazione e la fermata più vicina) e la frequenza del servizio. Sono stati definiti, dunque, quattro attributi per il trasporto collettivo e due per l’uso dell’autovettura.\\
+Per ogni attributo sono poi stati definiti i livelli di variazione. Questi, insieme ai valori assegnati, vengono riportati nelle seguenti tabelle: 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth, height=6cm]{attributi}
+\caption{Tabelle attributi}
+\end{figure}
+\label{figura 13}
+Si sottolinea che i valori definiti per gli attributi sono volutamente non realistici, dato che lo scopo è quello di testare la sensibilità dell’utenza.\\
+Avendo definito per ogni alternativa gli attributi, l’equazione della probabilità di scelta del nuovo sistema di trasporto può essere così espressa:
+\begin{equation}
+p^{q}[T]=\frac{e^{\alpha_{AT}\cdot X_{AT}+\alpha_{FT}\cdot X_{FT}+\alpha_{VT}\cdot X_{VT}+\alpha_{CT}\cdot X_{CT}}}{(e^{\alpha_{AT}\cdot X_{AT}+\alpha_{FT}\cdot X_{FT}+\alpha_{VT}\cdot X_{VT}+\alpha_{CT}\cdot X_{CT}})+(e^{\alpha_{VA}\cdot X_{VA}+\alpha_{CA}\cdot X_{CA}})}
+\end{equation}
+\subsection{Definizione del numero di scenari e divisione in blocchi}
+Il numero teorico degli scenari è definito dalla seguente formula:
+\begin{equation}
+N=\prod^{N}_{i=1}m^{n_{i}}_{i}
+\end{equation}
+Dove:
+\begin{itemize}
+\item $N$: numero teorico degli scenari;
+\item $k$: numero dei gruppi dei fattori;
+\item $n_i$: numero di fattori appartenenti a un gruppo i;
+\item $m_i$: numero dei livelli di variazione degli elementi di un gruppo i.
+\end{itemize}
+Con riferimento alle\textit{ tabelle in \ref{figura 13}}:  $N = 2^{2}\cdot 3^{4}=324$.\\
+I 324 scenari costituiscono il piano fattoriale completo.\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=9cm, height=10cm]{PFC}
+\caption{Estratto del PFC}
+\end{figure}
+Le relazioni da soddisfare quando si costruisce il piano fattoriale sono due: il confronto e l’ortogonalità, i quali devono essere entrambi nulli.\\
+Confronto: somma tra i diversi valori degli attributi articolati secondo i livelli di variazione. 
+\begin{equation}
+\prod^{N}_{i=1}l_{ij}=0
+\end{equation}
+Il numero degli scenari che ha il livello di variazione più basso deve essere uguale al numero degli scenari che ha il livello più alto. Si ha così la garanzia di considerare lo stesso numero di combinazioni.\\
+Ortogonalità: somma tra le diverse interazioni.\\
+\begin{equation}
+\prod^{N}_{i=1}l_{ij}\cdot l_{ih}=0
+\end{equation}
+Dato che il numero di scenari non è poi così elevato (324), si è scelto di realizzare direttamente la scomposizione in blocchi, senza passare per la costruzione del piano fattoriale fratto.\\
+La scomposizione in blocchi è una tecnica di riduzione, o parzializzazione, di un piano fattoriale completo basata sulla suddivisione degli N scenari in gruppi, o blocchi, che mantengano le caratteristiche di confronto e ortogonalità, da sottoporre a decisori diversi.\\
+Per effettuare la divisione in blocchi sono state definite quattro variabili di blocco (AT·FT, AT·VT, AT·CT, AT·VA) in cui ognuna di esse è l’interazione tra due attributi. Si sono quindi ottenuti 81 blocchi, ognuno da 4 scenari. Ad ogni intervistato sono stati dunque sottoposti 4 scenari.
+\begin{figure}[H]
+\centering
+\includegraphics[width=9cm, height=9cm]{blocchi}
+\caption{Estratto della scomposizione a blocchi}
+\end{figure}
+
+
+\subsection{Indagini SP}
+Per valutare se un servizio non ancora esistente possa attrarre una quota significativa di domanda potenziale, si eseguono indagini SP, ovvero indagini alle preferenze dichiarate. Attraverso queste indagini gli intervistati dichiarano se sarebbero interessati ad utilizzare una nuova alternativa modale. Si realizzano, quindi, scenari ipotetici da sottoporre a un certo numero di persone. In ogni scenario, l’intervistato confronta delle alternative e valuta, in base alle prestazioni, quale preferisce.\\
+Nel nostro caso l’indagine è stata realizzata mediante un questionario online (piattaforma “Moduli di Google”).\\
+La prima parte di ogni questionario ha permesso l’identificazione dell’intervistato. Ad esso, infatti, sono state sottoposte alcune domande:
+\begin{itemize}
+\item Se conoscesse la Valcuvia, informazione che ci ha permesso di riconoscere quali persone avessero una maggiore consapevolezza della realtà analizzata;
+\item Sesso, età, occupazione;
+\item Possesso della patente di guida, possesso di un veicolo, frequenza di utilizzo del servizio di trasporto collettivo.
+\end{itemize}
+Si riportano di seguito i grafici relativi a queste informazioni:\\
+\begin{figure}[H]
+\centering
+\subfloat{\includegraphics[width=6cm, height=3cm]{conosci}}
+\qquad
+\subfloat{\includegraphics[width=6cm, height=3cm]{sesso}}
+\qquad
+\subfloat{\includegraphics[width=6cm, height=3cm]{età}}
+\qquad
+\subfloat{\includegraphics[width=6cm, height=3cm]{patente}}
+\caption{Risultati sondaggio}
+\end{figure}
+\begin{figure}[H]
+\centering
+\subfloat{\includegraphics[width=6cm, height=3cm]{veicolo}}
+\qquad
+\subfloat{\includegraphics[width=6cm, height=3cm]{occupazione}}
+\qquad
+\subfloat{\includegraphics[width=7cm, height=3cm]{tpl}}
+\caption{Risultati sondaggio}
+\end{figure}
+Ad ogni intervistato è stato poi sottoposto un blocco contenente quattro scenari. Per selezionare un blocco casuale, all’utente è stato chiesto di scegliere un colore tra giallo, arancione, verde, rosa e blu, e, in seguito, un numero compreso in un certo intervallo.\\
+A titolo di esempio si riporta uno degli scenari:
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm, height=8cm]{sondaggio}
+\caption{Esempio di sondaggio}
+\end{figure}
+Come è possibile osservare, all’intervistato è stato chiesto di scegliere, in base alle prestazioni (frequenza, tempo di viaggio e tempo di accesso) e ai costi, se preferisse l’autovettura o il nuovo sistema di trasporto.\\
+Una volta inviato il questionario, l’utente aveva la possibilità di rispondere ad altre interviste.\\
+Il numero minimo di persone da raggiungere era 81, pari al numero di blocchi individuati in sede di scomposizione, ma noi siamo riusciti a raccogliere in tutto 220 risposte.\\
+Attraverso le risposte ottenute, è stato poi possibile calibrare il modello di scelta modale e capire quali prestazioni e costi potessero convincere gli utenti a usare il nuovo servizio.
+\subsection{Calibrazione}
+Come già scritto nell'equazione \ref{equation}, la probabilità di scelta è data dall’equazione:
+\begin{equation}
+p^{q}[j]=\frac{e^{\sum_{k}\alpha^{q}_{k}\cdot X^{q}_{kj}}}{\sum^{m}_{i=1}e^{\sum_{k}\alpha_{k}^{q}\cdot X^{q}_{ki}}}
+\end{equation}
+Finché non si conoscono gli $\alpha_{k}$, però, non è possibile utilizzare il modello. Per ricavare gli $\alpha_{k}$ è necessario conoscere la probabilità di scelta. Siccome una delle due alternative non esiste ancora, per ricavare p è stata eseguita un’indagini SP, ovvero un’indagine alle preferenze dichiarate. Attraverso le indagini, quindi, p è diventata un dato del problema.\\
+Per determinare gli $\alpha$ si utilizza un metodo chiamato metodo della Massima Verosimiglianza. Tra tutti i valori di $\alpha$, bisogna trovare la combinazione di valori che rende il più possibile simile il risultato del rapporto dell’ultima equazione alla p rilevata.\\
+Per farlo si costruisce un’equazione, chiamata equazione della Verosimiglianza (indicata con L), che è funzione dei coefficienti ed è data dal prodotto delle probabilità in funzione degli attributi che caratterizzano le singole alternative:
+\begin{equation}
+L(\alpha)=\prod^{Ninterviste}_{q=1} p^{q}[i(q)](X^{q},\alpha)=\prod^{Ninterviste}_{q=1} \left(\frac{e^{\sum_{k}\alpha^{q}_{k}\cdot X^{q}_{kj}}}  {\sum^{m}_{i=1}e^{\sum_{k}\alpha^{q}_{k}\cdot X^{q}_{kj}}} \right)
+\end{equation}
+Dell’equazione appena scritta è da ricercare il massimo.\\
+La calibrazione è stata effettuata per mezzo di un foglio Excel e il risolutore non è riuscito ad arrivare a convergenza. Si è dunque deciso di linearizzare, esprimendo la Log-Verosimiglianza (indicata con l):
+\begin{equation}
+l(\alpha)=\ln L(\alpha)=ln\prod^{Ninterviste}_{q=1}p^{q}[i(q)](X^{q},\alpha)=\sum^{Ninterviste}_{q=1}\ln p^{q}[i(q)](X^{q},\alpha)
+\end{equation}
+Il risultato ottenuto per mezzo del risolutore di Excel è il seguente:\\
+
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+  \hline
+  alfaFT	& alfaVT&	alfaCT	&alfaAT	&alfaVA&	alfaCA\\
+  \hline
+  -0,0110&-0,0249	&-0,134&	-0,0268	&-0,0283&-0,134\\
+  \hline
+\end{tabularx}
+\\
+
+Tutti i valori dei coefficienti, come ci aspettavamo, sono negativi.\\
+Si sono inoltre calcolati i valori del tempo, sia per il nuovo servizio sia per l’autovettura, come il rapporto tra il parametro del tempo e quello del costo.\\
+I valori ottenuti sono:
+\\
+\begin{equation}
+VT=\frac{\alpha_{VT}}{\alpha_{CT}}=\frac{-0,0249}{-0,134}\cdot60\frac{min}{ora}\sim11\frac{euro}{ora}
+\end{equation}
+\begin{equation}
+VA=\frac{\alpha_{VA}}{\alpha_{CA}}=\frac{-0,0283}{-0,134}\cdot60\frac{min}{ora}\sim13\frac{euro}{ora}
+\end{equation}
+\\
+Essi sono congrui con la realtà.
+\newpage
+\subsection{Analisi di sensibilità}
+Ad ogni attributo si assegna un valore realistico:\\
+
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+ \hline
+ FT [min]	&VT [min]	&CT [\euro]	&AT [min]	&VA [min]&	CA [\euro]\\
+ \hline
+25&	45&	3&	10&	40	&9\\
+\hline
+\end{tabularx}
+\\
+
+Con i coefficienti ottenuti per mezzo della calibrazione, si calcola finalmente la probabilità di scelta del nuovo servizio, la quale risulta pari al 57\%.\\
+Si osserva ora come varia la probabilità di scelta da parte dell’utenza potenziale se si fa variare un attributo alla volta, mentre tutti gli altri vengono tenuti fissi:\\
+
+\begin{figure}[H]
+\centering
+\subfloat{\includegraphics[width=\textwidth, height=8cm]{sens1}}
+\qquad
+\subfloat{\includegraphics[width=\textwidth, height=8cm]{sens2}}
+\caption{Variazione della probabilità in funzione degli attributi}
+\end{figure}
+\newpage
+\begin{figure}
+\includegraphics[width=\textwidth, height=8cm]{sens3}
+\caption{Variazione della probabilità in funzione degli attributi}
+\end{figure}
+Come si può osservare dai grafici, gli utenti sono risultati sensibili a variazioni del tempo di viaggio e del costo della nuova alternativa, ma anche a variazioni del tempo di viaggio in autovettura e del relativo costo. Verso il tempo di accesso alla fermata e la frequenza, invece, la sensibilità degli utenti è risultata inferiore.\\
+A causa dell’elevata sensibilità al tempo di viaggio con il nuovo servizio di trasporto, verrà scelto e dimensionato un sistema tale da soddisfare i requisiti minimi in termini di prestazione, compatibilmente con la geografia del luogo e le risorse disponibili. La scarsa sensibilità al tempo di accesso alla fermata, infine, ci ha permesso di fissare definitivamente la localizzazione delle fermate.
+\newpage
+\subsection{Diagrammi di carico}
+Per dimensionare il nuovo sistema di trasporto è necessario individuare la tratta di massimo carico, ovvero il percorso tra due fermate con il maggior numero di passeggeri a bordo. Il sistema, infatti, deve essere dimensionato per portare tutte le persone presenti sulla sezione di massimo carico. Per fare ciò, sono state analizzate sia l’ora di punta del mattino, in cui la direzione caratterizzata dalla domanda maggiore è quella diretta da Luino a Cittiglio, sia l’ora di punta serale, in cui la direzione caratterizzata dalla domanda maggiore è quella diretta da Cittiglio a Luino.\\
+
+\textbf{Da Luino a Cittiglio}:\\
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+ \hline
+ \textbf{N° fermata}	&\textbf{Fermata}	&\textbf{Salgono}	&\textbf{Scendono}	&\textbf{Pax a bordo}&\textbf{N° pax reale} \\
+\noalign{\hrule height 1.2pt}
+ 1	&Luino-Germignaga&	487	&0 &	487&	276\\
+ \hline
+2	&Montegrino	&114&	29	&572&	324\\
+\hline
+3	&Mesenzana-Grantola&	151	&148&	575	&326\\
+\hline 
+4	&Cassano Valcuvia-Ferrera&	108&	31&	652	&370\\
+\hline
+5	&Rancio Valcuvia-Bedero	&162&	46	&768&	435\\
+\hline
+6	&Cuveglio-Cuvio	&176&	38	&906	&514\\
+\hline
+7&	Casalzuigno	&146	&19&	1033&	586\\
+\hline
+8&	Brenta	&221	&13	&1241&	\textcolor{orange}{\textbf{704}}\\
+\hline
+9	&Cittiglio	& 	0&1241&	0&	0\\
+ \hline
+\end{tabularx}
+\caption{Diagramma di carico direzione Luino-Cittiglio}
+\end{table}
+\
+
+Nel grafico seguente viene riportato l’andamento dei passeggeri a bordo lungo tutta la linea nella direzione Luino-Cittiglio:
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm, height=7cm]{andata}
+\caption{Diagramma di carico mattino}
+\end{figure}
+
+Il numero reale di passeggeri è stato ottenuto moltiplicando il numero di passeggeri a bordo, ottenuto durante l’analisi della domanda, per la probabilità di scelta del nuovo servizio.\\
+Nella direzione Luino-Cittiglio l’arco più carico è quello tra Brenta e Cittiglio, ovvero l’ultimo tratto della linea. Considerando la probabilità di scelta del trasporto pubblico collettivo, il massimo carico è pari a 704 passeggeri/h.\\
+
+\textbf{Da Cittiglio a Luino}:\\
+\
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+ \hline
+ \textbf{N° fermata}	&\textbf{Fermata}	&\textbf{Salgono}	&\textbf{Scendono}	&\textbf{Pax a bordo}&\textbf{N° pax reale} \\
+\noalign{\hrule height 1.2pt}
+1	&Cittiglio	&588	 &0&	588&	\textcolor{orange}{\textbf{333}}\\
+\hline
+2	&Brenta&	9	&104	&493	&280\\
+\hline
+3	&Casalzuigno&	15&	72	&436&	247\\
+\hline
+4&	Cuveglio-Cuvio	&28&	91&	373&	211\\
+\hline
+5	&Rancio Valcuvia-Bedero&	28	&81&	320	&181\\
+\hline
+6&	Cassano Valcuvia-Ferrera	&24	&38	&306	&174\\
+\hline
+7	&Mesenzana-Grantola&	97	&78	&325	&184\\
+\hline
+8&	Montegrino	&20	&57&	288&	163\\
+\hline
+9 &Luino-Germignaga	&0 &	288&	0	&0\\
+\hline
+\end{tabularx}
+\caption{Diagramma di carico direzione Cittiglio-Luino}
+\end{table}
+\
+
+Nel grafico seguente viene riportato l’andamento dei passeggeri a bordo lungo tutta la linea nella direzione Cittiglio-Luino:
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm, height=7cm]{ritorno}
+\caption{Diagramma di carico sera}
+\end{figure}
+
+Nella direzione Cittiglio-Luino l’arco più carico è quello tra Cittiglio e Brenta, ovvero il primo tratto della linea. Considerando la probabilità di scelta del trasporto pubblico collettivo, il massimo carico è pari a 333 passeggeri/h.\\
+In ragione dei risultati ottenuti, il dimensionamento del servizio e del sistema di trasporto deve essere eseguito con riferimento all’arco Brenta-Cittiglio, nella direzione Luino-Cittiglio, dato che questo rappresenta la condizione più gravosa.
+\section{Tracciato e localizzazione fermate}
+La tramvia si sviluppa per 19km lungo il fondovalle, con un percorso quasi parallelo alla statale 394, in modo da lambire tutti i principali centri, nel caso dei comuni di Luino e Mesenzana si è deciso di posizionare due fermate nello stesso comune per servire le zone commerciali abbastanza lontani dai centri dei due paesi. I capolinea sono situati nelle immediate vicinanze delle stazioni di Luino e Cittiglio per garantire un comodo interscambio con i servizi ferroviari.\\
+\begin{figure}[H]
+\centering
+\subfloat{\includegraphics[width=12cm, height=10cm]{mappalinea}}
+\qquad
+\subfloat{\includegraphics[width=14cm, height=3cm]{listafermate}}
+\caption{Localizzazione fermate}
+\end{figure}
+\newpage
+\section{Scelta e dimensionamento del sistema di trasporto}
+Sulla base dell’analisi della domanda effettuata, è stato individuato il sistema di trasporto ottimale, con la finalità di garantire il servizio definito nei precedenti capitoli.\\
+Analizzando, tra le altre cose, anche la storia recente del territorio nel quale si inserisce lo studio, oggetto del presente elaborato, è stata rintracciata la presenza di una tramvia, non più in funzione, che collegava i paesi della Valcuvia. Si è quindi pensato di scegliere come sistema di trasporto una nuova tramvia, che ripercorre in parte il tracciato di quella dismessa, adattandosi però all’evoluzione del territorio e alle tecnologie attuali. Si tratta di un sistema di trasporto in sede propria, e quindi non condizionato dal traffico veicolare.\\ 
+Parallelamente a questa scelta progettuale, è stata studiata anche una nuova linea di bus che collega i medesimi paesi, sfruttando però le infrastrutture stradali già esistenti e passando per gli abitati dei vari comuni della Valcuvia.  
+\subsection{Caratteristiche tecniche dei veicoli}
+\textbf{Tram}\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm, height=7cm]{citadisfoto2}
+\caption{Alstom Citadis 305 in servizio a Sydney}
+\end{figure}
+Il veicolo prescelto è l’Alstom CITADIS 305, caratterizzato da una lunghezza compresa tra i 32 e i 37 m, e una capacità totale (comprensiva di passeggeri seduti e in piedi) che arriva fino a 238 passeggeri.\\
+\newpage
+Si riportano di seguito le caratteristiche tecniche e prestazionali del suddetto veicolo: 
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm, height=9cm]{citadistecnica}
+\caption{Caratteristiche tecniche Citadis 305 \cite{citadis}}
+\end{figure}
+\textbf{Bus}\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm, height=7cm]{citaro}
+\caption{Mercedes-Benz eCitaro 4 porte}
+\end{figure}
+Il veicolo scelto per la nuova autolinea è invece il Mercedes-Benz eCitaro G 4 porte: un bus snodato “all-electric” che assicura una capacità fino a 145 passeggeri.\\
+\newpage
+Si riportano di seguito i dati tecnici in sintesi: 
+\begin{figure}[H]
+\centering
+\subfloat{\includegraphics[width=12cm, height=8cm]{citaro1}}
+\qquad
+\subfloat{\includegraphics[width=12cm, height=8cm]{citaro2}}
+\caption{Caratteristiche tecniche Mercedes-Benz eCitaro \cite{citaro}}
+\end{figure}
+\begin{figure}[H]
+\centering
+\subfloat{\includegraphics[width=12cm, height=8cm]{citaro3}}
+\qquad
+\subfloat{\includegraphics[width=12cm, height=6cm]{citaro4}}
+\caption{Caratteristiche tecniche Mercedes-Benz eCitaro-continua \cite{citaro}}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth, height=7cm]{citarointero}
+\caption{Mercedes-Benz eCitaro 4 porte}
+\end{figure}
+\subsection{Infrastruttura}
+La linea tramviaria si muoverà lungo un percorso in sede riservata, esso è costituito da un binario unico a scartamento standard (1435 mm) con raddoppi in corrispondenza delle stazioni di Cuveglio/Cuvio, Cassano Valcuvia e Montegrino (rispettivamente a ¼, ½ e ¾ del percorso tramviario per consentire gli incroci tra veicoli che procedono nelle due direzioni opposte). L'elettrificazione è presente in corrente continua a 750 Volt.\\
+Ogni fermata sarà dotata di una banchina rialzata e di pensilina con pannello a messaggio variabile.\\
+L’autolinea si muoverà invece sulle strade esistenti. In corrispondenza di ciascuna fermata, saranno presenti pensiline dotate di pannello a messaggio variabile.\\
+\subsection{Progettazione del servizio}
+\textbf{Frequenza del servizo}\\
+La frequenza del servizio è stata calcolata facendo riferimento all’ora di punta (tra le 07:00 e le 9:00) come il rapporto tra i passeggeri effettivi dell’arco più carico e la capacità del mezzo in esame; a sua volta il numero di passeggeri dell’arco più carico è stato calcolato, come già detto nella sezione 4.7 moltiplicando il numero totale dei passeggeri dell’arco più carico per la probabilità di scelta, pari al 57\%: 
+\begin{equation}
+f_{tram}= \frac{N°pax}{C_t}=\frac{704}{238}=2,597 \Rightarrow 3
+\end{equation}
+\begin{equation}
+f_{bus}=\frac{N°pax}{C_b}=\frac{704}{145}=4,691 \Rightarrow 5
+\end{equation}
+Sono quindi necessari 3 tram o 5 autobus ogni ora per soddisfare la richiesta attuale di servizio. I risultati ottenuti sono riassunti nella seguente tabella:
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth, height=5cm]{frequenza}
+\caption{Calcolo della frequenza del servizio}
+\end{figure}
+\textbf{Potenzialità oraria di trasporto}\\
+La potenzialità oraria di trasporto coincide con il massimo numero di passeggeri che possono accedere al servizio nell’ora di punta (condizione di massima frequenza): è quindi pari al prodotto tra la capacità del veicolo e la sua frequenza:
+\begin{equation}
+Potenzialita'\;oraria\;tram=C_t*f=238*3=714\;\frac{passeggeri*direzione}{ora}
+\end{equation}
+\begin{equation}
+Potenzialita'\;oraria\;bus=C_b*f=150*5=750\;\frac{passeggeri*direzione}{ora}
+\end{equation}
+I valori ottenuti risultano superiori rispetto al numero dei passeggeri presenti sull’arco più carico durante l’ora di punta (714 e 725 rispetto a 704 rispettivamente per tram e autobus). Il servizio offerto è quindi in grado di soddisfare la domanda.\\
+\textbf{Tempo di fermata}
+Per il calcolo del tempo di fermata sono state innanzitutto analizzate le caratteristiche tecniche dei veicoli per definire il numero e la larghezza delle porte; sono quindi stati ipotizzati dei tempi di salita e discesa dalle vetture a passeggero: 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth, height=1.7cm]{fermata}
+\caption{Numero porte e tempi di salita e discesa mezzi}
+\end{figure}
+Facendo riferimento alla linea nell’ora di punta, è stato considerato il numero di spostamenti (espresso in passeggeri) che hanno origine o terminano in ciascuna fermata. Moltiplicando tali valori per la probabilità di scelta del nuovo sistema di trasporto (57\%) sono stati ricavati, sempre per ogni fermata, gli effettivi valori del numero di passeggeri che salgono o scendono dai mezzi. Dividendo tale valore per la frequenza di tram o bus precedentemente calcolata (3 tram all’ora, 5 bus all’ora), si ottiene lo stesso valore, ma riferito al singolo veicolo, che diviso per il numero di porte di tram o autobus determina il numero di passeggeri che sale o scende dal veicolo da ciascuna porta. Moltiplicando quest’ultimo valore per il tempo necessario a ciascun passeggero per effettuare le operazioni di salita o discesa dal veicolo (assunto pari a 2 secondi/passeggero) si ottengono i tempi, in secondi, necessari a consentire le operazioni di salita e di discesa che, se sommati, costituiscono i tempi di fermata, diversi per ogni stazione. Il più grande di questi tempi, eccezion fatta per i capolinea, sia nel caso della tramvia che dell’autolinea, si registra nella stazione di Mesenzana/Grantola. I valori sono pari rispettivamente a 18,84 secondi per il tram e 16,95 secondi per il bus.\\
+Tali valori corrispondono ai tempi minimi necessari a consentire le operazioni di cui sopra, pertanto sono stati approssimati e maggiorati a 60 secondi per ogni fermata.\\ 
+Si evidenzia che in questa fase dell’analisi le fermate sono intese come l’origine o il termine ultimo degli spostamenti dedotti dalle matrici OD. 
+\begin{figure}[H]
+\centering
+\subfloat{\includegraphics[width=12cm, height=4cm]{tempofermata1}}
+\qquad
+\subfloat{\includegraphics[width=12cm, height=4cm]{tempofermata2}}
+\qquad
+\subfloat{\includegraphics[width=12cm, height=4cm]{tempofermata3}}
+\qquad
+\subfloat{\includegraphics[width=12cm, height=4cm]{tempofermata4}}
+\qquad
+\subfloat{\includegraphics[width=12cm, height=4cm]{tempofermata5}}
+\caption{Calcolo del tempo di fermata}
+\end{figure}
+\subsection{Diagrammi di Trazione}
+Per la progettazione e il dimensionamento del servizio di trasporto tramviario sono stati utilizzati i diagrammi di trazione semplificati. Tale semplificazione si ritiene ammissibile in quanto le velocità risultano essere contenute (entro i 60 $km/h$). Nel caso del servizio di trasporto su strada, invece, non è possibile usare tali diagrammi a causa della forte dipendenza del servizio stesso dalle condizioni del traffico, soprattutto in ambito urbano.\\
+Relativamente alla costruzione dei diagrammi di trazione semplificati (trapezoidali) del servizio di trasporto tramviario è stato definito un valore di accelerazione, pari a quello di decelerazione di 1 $m/s^2$.\\ 
+
+\textbf{Fase di avviamento}\\
+
+Nella fase di avviamento il veicolo accelera in maniera costante, partendo da velocità nulla, fino a raggiungere la velocità di regime vmax, pari a 60 $km/h$. Le equazioni che governano tale fase sono:\\
+\begin{equation}
+v=a\cdot t
+\end{equation}
+\begin{equation}
+t_1=\frac{v_{max}}{a}\approx16,67\;s
+\end{equation}
+\begin{equation}
+x_1=\frac{1}{2}\cdot a\cdot t^2\approx 138,89\;m
+\end{equation}
+
+\textbf{Fase di regime regolato}\\
+
+Nella fase di regime regolato la velocità è costante e uguale a quella di regime del veicolo che si muove con moto rettilineo uniforme. In questo caso:
+\begin{equation}
+x_2=v_{max}\cdot t_2
+\end{equation}
+
+\textbf{Fase di frenatura}\\
+
+Analogamente a quanto accade nella fase di avviamento, ma con effetto contrario, nella fase di frenatura il veicolo decelera in maniera costante partendo dalla velocità di regime, fino ad arrestarsi. Le equazioni che governano questa fase sono: 
+\begin{equation}
+v=v_{max}-a\cdot t
+\end{equation}
+\begin{equation}
+t_3=\frac{v_{max}}{d}\approx16,67\;s
+\end{equation}
+\begin{equation}
+x_1=v_{max}\cdot t_3-\frac{1}{2}\cdot a\cdot t^2\approx 138,89\;m
+\end{equation}
+A queste tre fasi se ne aggiunge una terza che è quella di fermata alle stazioni, il cui tempo è stato definito al passo precedente. 
+\begin{figure}[H]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth, height=9cm]{trazione1}}
+\qquad
+\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth, height=9cm]{trazione2}}
+\caption{diagrammi di trazione}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth, height=6cm]{grandezzeriferimento}
+\caption{Diagrammi di trazione-grandezze di riferimento}
+\end{figure}
+\subsection{Prestazioni}
+\textbf{Velocità commerciale}
+\begin{equation}
+v_{commerciale}=\frac{L}{t_{vTot}+t_{fTot}}=\frac{18820}{1295,87+540}=10,25\;m/s=36,90\;km/h
+\end{equation}
+\textbf{Velocità di esercizio}
+\begin{equation}
+v_{esercizio}=\frac{L}{t_{vTot}+t_{fTot}+t_{fInv}}=\frac{18820}{1295,87+540+300}=8,81\;m/s=31,72\;km/h
+\end{equation}
+\textbf{Tempo al giro}
+\begin{equation}
+t_g=\frac{2L}{V_{esercizio}}=\frac{2\cdot 18820}{8,81}=4271,73\;s=71,20\;min=1,19\;h
+\end{equation}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth, height=6cm]{prestazioni}
+\caption{Prestazioni dei servizi di trasporto}
+\end{figure}
+Si precisa che nel caso dell’autolinea, non essendo possibile costruire il diagramma di trazione semplificato come fatto nel caso della tramvia, il tempo di andata è stato stimato dall’analisi dei tempi di viaggio di autolinee attualmente presenti nel territorio; il tempo al giro relativamente all’autobus è stato calcolato analogamente a quanto visto per la tramvia; il tempo di inversione, per entrambi i servizi di trasporto è stato assunto pari a 5 minuti.
+\subsection{Parco veicoli}
+Il parco veicoli circolante è stato calcolato come il prodotto tra la frequenza e il tempo al giro:
+\begin{equation}
+N_{vTram}=f\cdot t_g=3\cdot1,19=3,57\Rightarrow4\;tram
+\end{equation}
+\begin{equation}
+N_{vBus}=f\cdot t_g=5\cdot1,67=8,35\Rightarrow9\;bus
+\end{equation}
+A questi valori vanno aggiunti rispettivamente un tram e un autobus per garantire la corretta manutenzione del parco veicolare senza incorrere in cali nell’offerta di trasporto: 
+\begin{table}[H]
+\centering
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+ \hline
+ &\textbf{Tram}&\textbf{Bus}\\
+ \hline
+ Circolante&4&9\\
+ \hline
+ Totale&5&10\\
+ \hline
+ \end{tabularx}
+ \caption{Parco veicoli}
+ \end{table}
+\subsection{Distanza tra i veicoli e di sicurezza}
+L’effettiva distanza tra i veicoli è stata calcolata sulla base dell’estensione del tracciato del numero di veicoli circolanti, senza considerare la lunghezza dei convogli.\\
+La distanza tra i veicoli è stata calcolata come:
+\begin{equation}
+D_v=\frac{2\cdot L}{n}=\frac{37640}{4}=9410\;m
+\end{equation}
+La distanza effettiva è invece:
+\begin{equation}
+D_e=D_v-L_{tram}=9410-37=9373\;m
+\end{equation} 
+Con $L_{tram}$ lunghezza dei tram, pari a 37 m\\
+La distanza di sicurezza si calcola come:
+\begin{equation}
+d_{sicurezza}=\frac{v^2}{2d}=138,94\;m
+\end{equation}
+Per soddisfare la verifica, la distanza effettiva deve essere maggiore della distanza di sicurezza:\\
+\begin{equation}
+9337\;m \gg 138,94\;m
+\end{equation}
+Per cui la verifica risulta soddisfatta.
+\newpage
+\section{Analisi finanziaria}
+L’analisi finanziaria ha come obiettivo la valutazione della fattibilità degli interventi e di confrontarli tra loro. L’inserimento di bus elettrici o di tram costituirebbe una valida alternativa al prevalente utilizzo dell’auto della Valcuvia. In particolare, l’analisi consiste nel definire un bilancio di previsione, cioè la stima dei costi e dei ricavi in un anno medio di esercizio, per ciascun intervento e di stabilire la scelta più opportuna come quella volta a ottimizzare il profitto giornaliero.\\
+I costi in questione sono costituiti dal costo iniziale per la costruzione delle infrastrutture e per l’acquisto dei veicoli e da costo di esercizio.
+\subsection{Costi di costruzione}
+L’investimento iniziale dei due sistemi di trasporto è riassunto nella tabella seguente.\\
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\noalign{\hrule height 1.2pt}
+ \multicolumn{4}{|c|}{\textbf{Tram}} \\
+\noalign{\hrule height 1.2pt}
+\textbf{Voci}& \textbf{Quantità} &\textbf{Costo unitario}& \textbf{Costo totale [\euro]}\\
+ \hline
+Veicoli& 5 &3'200'000,00& 16'000'000,00\\
+\hline
+Pensiline &17& 6'000,00 &102'000,00\\
+\hline
+Banchine &14 &2'400,00 &33'600,00\\
+\hline
+Biglietteria automatica& 2& 8'000,00& 16'000,00 \\
+\hline
+Armamento e scavi& 20 km &1'600'000,00 $\textup{\euro}/km$& 32'000'000,00 \\
+\hline
+Deposito &1'000 $m^2$& 10'000,00 $\textup{\euro}/m^2$ &10'000'000,00\\
+\hline
+\end{tabularx}
+\caption{Costi di costruzione tram \cite{preziario}\cite{costotram}\cite{banchine}\cite{pensilina}\cite{biglietteria}}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\noalign{\hrule height 1.2pt}
+ \multicolumn{4}{|c|}{\textbf{Bus}} \\
+\noalign{\hrule height 1.2pt}
+\textbf{Voci}& \textbf{Quantità} &\textbf{Costo unitario}& \textbf{Costo totale[\euro]}\\
+ \hline
+Veicoli& 10 &500'000,00& 5'000'000,00 \\
+\hline
+Pensiline &22& 6'000,00 &132'000,00 \\
+\hline
+Biglietteria automatica& 2& 8'000,00& 16'000,00 \\
+\hline
+Deposito &800 $m^2$& 6'000,00 $\textup{\euro}/m^2$ &4'800'000,00\\
+\hline
+Colonnine ricarica elettrica &3 &15'000,00& 45'000,00\\
+\hline
+\end{tabularx}
+\caption{Costi di costruzione Bus\cite{pensilina}\cite{biglietteria}}
+\end{table}
+\
+
+Nel progetto del bus sono previste un totale di 22 pensiline, corrispondenti alle 11 fermate previste per senso di marcia. Diversamente, nel caso del tram, è stata prevista l’unica pensilina per fermata, considerando che la linea è a unico binario. Sono state, però, aggiunte cinque pensiline per tenere conto che in tre fermate è presente il raddoppio del binario e che si sono considerate due pensiline per i capolinea.\\
+Inoltre, sono state previste 14 banchine per la linea del tram, considerandone una per ciascuna fermata e aggiungendone tre per tenere conto dei raddoppi. Ai capolinea è stata prevista un’unica banchina interposta tra i due binari.\\
+Si è prevista una biglietteria automatica per ciascun capolinea, lasciando la possibilità di acquistare il biglietto a bordo per tutte le altre fermate della linea.\\
+Considerando il costo dell’armamento e degli scavi paragonabile, si è considerato il doppio del costo dell’armamento per considerare anche gli scavi coinvolti. Visto che il costo è definito in \euro/km, lo si è moltiplicato per la lunghezza totale della linea per ottenere il costo totale. La lunghezza totale della linea è data da quasi 19 km di lunghezza del binario unico e da circa un 1km di lunghezza del secondo binario in corrispondenza dei raddoppi. La parte rimanente dell’infrastruttura della linea del tram è data da sottostazione elettrica, rete aerea, telecontrollo e asservimento semaforico corrispondenti rispettivamente a 800000 $\textup{\euro}/km$, 700000 $\textup{\euro}/km$ e 800000 $\textup{\euro}/km$ per un totale di 2300000 $\textup{\euro}/km$. Quest’ultimo costo, moltiplicato per la lunghezza totale della linea ricavata precedentemente, fornisce il costo totale della parte rimanente dell’infrastruttura.\\ 
+Si prevede di realizzare un unico deposito disposto circa a metà del tracciato, in modo da ottimizzare il tempo trascorso dai bus e dai tram per raggiungere i capolinea, tenendo anche conto delle zone disponibili per l'edificazione. Le aree sono state ricavate a partire dalla dimensione del singolo autobus e del singolo tram e considerando il numero di mezzi previsti. In particolare, per l’autobus si sono considerate una lunghezza di 18 m e una larghezza di poco meno di 3 m, mentre per il tram si sono considerate una lunghezza di 35 m e una larghezza di 2,5 m.\\
+Le colonnine necessarie per la ricarica dei bus elettrici sono da 180kW di potenza e sono in grado quindi di ricaricare completamente un bus in circa 1h e 40 minuti, perciò tre bastano per soddisfare tutte le ricariche al giorno necessarie
+\subsection{Costi di esercizio}
+\textbf{Costo dell'energia}\\
+
+I costi di esercizio sono dati dal costo dell’energia elettrica per entrambi i mezzi, dal personale e dalla manutenzione.
+Il costo unitario dell’energia elettrica è supposto pari a 0,276 \textup{\euro}/kWh. L’energia annua richiesta dal parco circolante è funzione del servizio di trasporto offerto.\\
+\begin{equation}
+Costo\;energia\; Tram=0,276\frac{\textup{\euro}}{kWh}*13,89\frac{kWh}{corsa}*45\frac{corse}{giorno}*365\frac{giorni}{anno}
+\end{equation}
+\begin{equation}
+Costo\;energia\; Bus=0,276\frac{\textup{\euro}}{kWh}*300\frac{kWh}{bus}*365\frac{giorni}{anno}*9\frac{bus}{giorno}
+\end{equation}
+Il costo dell’energia per il bus è stato stimato sulla capacità della batteria del bus che è sufficiente a percorrere tutti i chilometri dettati dalla domanda per ciascun autobus. È quindi necessaria una caricare per ciascun autobus al giorno.\\  
+
+\textbf{Costi di manutenzione}\\
+
+Si è stimato il costo della manutenzione, della pulizia e della vigilanza da ricerche effettuate sull’argomento. \\
+In questa voce è compresa la manutenzione dei veicoli, la loro pulizia e la vigilanza notturna. In questa voce è considerato anche il personale responsabile ai lavori sopracitati. Per gli autobus è quindi anche considerato l’addetto alla ricarica notturna.\\
+Per il tram è stata considerata anche la manutenzione dell’infrastruttura, nello specifico la manutenzione dei binari dei pali, dei cavi elettrici, delle banchine e delle pensiline.\\
+\
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+ \hline
+\vspace{2.5mm}\multirow{2}{*}{\textbf{Tram}} & Manutenzione pulizia e vigilanza &\vspace{2.5mm} \multirow{2}{*}{4} &\vspace{0.6mm}1,11 $\textup{\euro}/veicolo*km$ &\vspace{1mm} 602'441,00\\\cline{2-2} \cline{4-5} & Manutenzione infrastruttura&  &1,21 $\textup{\euro}/veicolo*km$&\vspace{0.1mm}656'715,00\\
+\hline
+\vspace{1mm}\textbf{Bus}&Manutenzione pulizia e vigilanza &\vspace{1.2mm}9 &1,11 $\textup{\euro}/veicolo*km$ & \vspace{1mm}1'385'613,00 \\
+\hline
+\end{tabularx}
+\caption{Costi di manutenzione \cite{pulizia}}
+\end{table}
+\
+\newpage
+\textbf{Costo del personale}\\
+
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\noalign{\hrule height 1.2pt}
+ \multicolumn{4}{|c|}{\textbf{Personale Tram}} \\
+ \hline
+Ruolo &Numero di dipendenti& Stipendio annuo& Totale\\
+\hline
+Autisti& 9 &25'300,00 \euro& 227'700,00 \euro \\
+\hline
+Controllori& 3 &22'000,00 \euro &66'000,00 \euro \\
+\hline
+Responsabile &1& 50'000,00 \euro &50'000,00 \euro\\
+\hline
+Agenti di manovra& 6& 35'000,00 \euro& 210'000,00 \euro\\
+\hline
+\end{tabularx}
+\caption{Costo personale Tram \cite{agente}\cite{responsabile}\cite{autista}}
+\end{table}
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\hline
+ \multicolumn{4}{|c|}{\textbf{Personale Bus}} \\
+\noalign{\hrule height 1.2pt}
+Ruolo &Numero di dipendenti& Stipendio annuo& Totale\\
+\hline
+Autisti& 17 &25'300,00 \euro& 430'100,00 \euro \\
+\hline
+Controllori& 3 &22'000,00 \euro &66'000,00 \euro \\
+\hline
+Responsabile &1& 50'000,00 \euro &50'000,00 \euro\\
+\hline
+\end{tabularx}
+\caption{Costo personale Bus \cite{agente}\cite{responsabile}\cite{autista}}
+\end{table}
+Per stabilire il numero di dipendenti per ciascun ruolo, si sono tenute conto delle ore di servizio al giorno, la durata dei vari turni lavorativi e una media di veicoli che circolano in contemporanea per giorni feriali e festivi. In particolare, per il bus si sono previsti un numero di autisti necessario per avere la disponibilità di 8 autisti al giorno per i giorni feriali e 5 autisti al giorno per i giorni festivi. Allo stesso modo, per il tram si sono considerati 16 autisti al giorno per i giorni feriali e 5 autisti al giorno per i giorni festivi.\\
+Gli autisti in entrambi i casi lavorano per 6 ore al giorno sei giorni su sette, successivamente, si sono considerati 3 controllori con turni da 8 ore al giorno. I 6 agenti di manovra lavorano 8 ore al giorno in coppia. Per il personale sono considerati cinque giorni di lavoro alla settimana esclusi gli autisti come già detto. 
+\subsection{Ammortamento}
+La programmazione del bilancio annuale è fondamentale per mantenere efficiente il sistema di trasporto. Si è previso di ripartire il costo iniziale in rate costanti annuali. \\
+Si è calcolato l’ammortamento tramite la seguente formula:
+\begin{equation}
+P=S\cdot \frac{(1+i)^n\cdot i}{(1+i)^n-1}
+\end{equation} 
+con:
+\begin{itemize}
+\item S = valore del bene da ammortare 
+\item i = tasso di interesse 
+\item n = numero di rate (annuali)
+\end{itemize}
+Si è considerato un tasso di interesse pari al 2\%. Il numero di anni di vita utile per gli autobus, le pensiline e le biglietterie è stato considerato pari a 15 anni, per i tram pari a 25 anni e per i depositi e per l’infrastruttura della linea dei tram pari a 50 anni.\\
+In particolare, si riportano di seguito i calcoli necessari per ottenere tali ammortamenti.\\
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\hline
+\multicolumn{4}{|c|}{\textbf{Tram}}\\
+\hline
+Anni su cui ammortare il bene &Bene da ammortare &Valore del bene da ammortare &Ammortamento annuo\\ 
+\hline
+\multirow{2}{*}{15}&Pensiline &102'000,00 \euro & \multirow{2}{*}{9'183,41 \euro}\\
+\cline{2-3}
+&Biglietterie &16'000,00 \euro &\\
+\hline
+25 &Veicoli &16'000'000,00 \euro &819'527,01 \euro\\ 
+\hline
+\multirow{2}{*}{50}&Infrastruttura &78'033'600,00 \euro&\multirow{2}{*}{2'801'511,71 \euro}\\
+\cline{2-3}
+&Deposito &10'000'000,00 \euro&\\ 
+\hline
+\multicolumn{3}{|c|}{\textbf{Totale}}&\textbf{3'630'222,13 \euro} \\
+\hline
+\end{tabularx}
+\caption{Ammortamento tram}
+\end{table}
+Successivamente, si riportano i costi totali annui previsti dal sistema di trasporto. 
+
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\hline
+\multicolumn{4}{|c|}{\textbf{Bus}}\\
+\hline
+Anni su cui ammortare il bene &Bene da ammortare &Valore del bene da ammortare &Ammortamento annuo\\ 
+\hline
+\multirow{2}{*}{15}&Veicoli & 5'000'000,00 \euro & \multirow{2 }{*}{404'147,68 \euro}\\
+\cline{2-3}
+&Pensiline &132'000,00 \euro &\\
+\cline{2-3}
+&Biglietterie &16'000,00\euro&\\
+\cline{2-3}
+&Colonnine&45'000,00 \euro&\\
+\hline
+50 &Deposito &4'800'000,00 \euro &152'751,41 \euro\\
+\hline
+\multicolumn{3}{|c|}{\textbf{Totale}}&\textbf{556'899,08 \euro} \\
+\hline
+\end{tabularx}
+\caption{Ammortamento bus}
+\end{table}
+Successivamente, si riportano i costi totali annui previsti dal sistema di trasporto.\\
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\hline
+\multicolumn{2}{|c|}{\textbf{Costi annui tram}}\\
+\noalign{\hrule height 1.2pt}
+Energia &62'957,54 \euro\\
+\hline
+Personale &553'700,00 \euro\\
+\hline
+Manutenzione &1'259'156,80 \euro \\
+\hline
+Ammortamento &3'630'222,13 \euro \\
+\hline
+\textbf{Totale}& \textbf{4'849'331,07}\euro\\
+\hline
+\end{tabularx}
+\caption{Costi annui tram}
+\end{table}
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X  
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X | }
+\hline
+\multicolumn{2}{|c|}{\textbf{Costi annui bus}}\\
+\noalign{\hrule height 1.2pt}
+Energia &271'998,00 \euro\\
+\hline
+Personale &546'100,00 \euro\\
+\hline
+Manutenzione &1'385'613,00 \euro \\
+\hline
+Ammortamento &556'899,08 \euro \\
+\hline
+\textbf{Totale}& \textbf{2'760'610,08} \euro\\
+\hline
+\end{tabularx}
+\caption{Costi annui bus}
+\end{table}
+Il fattore principale che contribuisce al costo annuo maggiore per la linea del tram è la realizzazione dell’infrastruttura che, invece, per la linea dell’autobus non è previsto perché l’infrastruttura sarebbe già esistente. 
+\newpage
+\subsection{Ricavi}
+Per il calcolo dei ricavi si è pensato di adattare i risultati del dimensionamento per ottenere dei numeri che siano rappresentativi del reale carico che può portare profitto alle finanze dell’infrastruttura.\\
+Dal dimensionamento si è ottenuto che gli utenti che utilizzerebbero il servizio nell’ora di punta nella direzione di massimo flusso sono 704 persone. Da questo dato si è dimensionato sia il servizio tramviario sia l’autobus.  Ne derivano i dati relativi a un giorno feriale. Questi sono illustrati nelle seguenti tabelle. \\
+Si fa notare che nella direzione di massimo carico si è considerata la vettura con massima capacità mentre nell’altra direzione con un tasso del 40\% di occupazione.\\
+\begin{table}[H]
+\begin{minipage}{0.48\textwidth}
+       	\centering
+	\begin{tabularx}{1\textwidth} {
+         | >{\centering\arraybackslash}X   
+         | >{\centering\arraybackslash}X 
+         | >{\centering\arraybackslash}X | }
+         \hline   
+         Fascia oraria&Totale veicoli& Utenti a bordo\\
+         \noalign{\hrule height 1.2pt} 
+         6-7& 3 &571\\ 
+         \hline
+         7-9& 4 &1503 \\
+        \hline
+9-12& 2 &809\\
+\hline
+12-14 &3 &1047 \\
+\hline
+14-16& 2& 571 \\
+\hline
+16-19 &3 &1523 \\
+\hline
+19-21& 2 &571\\
+\hline
+\multicolumn{2}{|c|}{\textbf{Totale}} &\textbf{6596}\\ 
+\hline
+ \end{tabularx}	
+ \caption{Passeggeri totali tram}
+\end{minipage}
+\hfill
+\begin{minipage}{.48\textwidth}
+       	\centering
+	\begin{tabularx}{1\textwidth} {
+         | >{\centering\arraybackslash}X   
+         | >{\centering\arraybackslash}X 
+         | >{\centering\arraybackslash}X | }
+   \hline     
+         Fascia oraria&Totale veicoli& Utenti a bordo\\
+            \noalign{\hrule height 1.2pt}   
+         6-7& 4 &571\\ 
+         \hline
+         7-9& 6 &1503 \\
+        \hline
+9-12& 2 &809\\
+\hline
+12-14 &4 &1047 \\
+\hline
+14-16& 2& 571 \\
+\hline
+16-19 &4 &1523 \\
+\hline
+19-21& 2 &571\\
+\hline
+\multicolumn{2}{|c|}{\textbf{Totale}} &\textbf{6596}\\ 
+\hline
+ \end{tabularx}
+ \caption{Passeggeri totali bus}	
+\end{minipage}
+\end{table}
+\
+
+Poiché si tratta di un traffico prettamente pendolare, si è osservato che durante i giorni festivi e i mesi di luglio e agosto i dati sopra citati sovrastimano gli utenti che utilizzano il servizio. \\
+Si è quindi optato per dividere i giorni dell’anno in: 190 giorni feriali il cui carico è il 70\% di quello calcolato con la potenzialità oraria massima, 100 giorni in cui il carico è il 20\%, 75 giorni in cui il carico è il 50\% sempre riferito alla potenzialità oraria massima.\\
+Si è quindi calcolato il flusso giornaliero, ponderato sulle percentuali viste prima, che sia per i tram che per gli autobus è pari a 3443 utenti al giorno.\\
+ Avendo ora ottenuto una stima dei passeggeri che si ritiene essere vicina alla media annuale si è analizzato il prezzo del biglietto in riferimento alla lunghezza della tratta. Sono stati presi in considerazione i tabellari di Trenord \cite{trenord} che per una tratta di circa 18 km attua un prezzo di 2,5 euro per il biglietto intero.\\
+Si è simulato tramite programma Excel quale fosse il prezzo del biglietto che potesse dare il massimo ricavo. La simulazione non è stata presa in considerazione per il risultato troppo alto da dare al biglietto.\\
+Si è scelto quindi di avere un prezzo del biglietto di 4 euro in linea con quello dei tabellari Trenord e con la nostra probabilità di scelta.\\
+Si offre ovviamente la possibilità di acquistare abbonamenti settimanali, mensili e annuali ai quali vieni applicato uno sconto del 20, 40 e 50\% rispettivamente.\\
+Si è presa inoltre in considerazione la possibilità di applicare degli sconti per gli under 14 pari al 50\%, per gli under 26 e gli over 65 del 20\%. Per gli under 4 anni la tariffa è gratuita come per i diversamente abili.\\
+Fatte queste precisazioni riguardo le tariffe, analizzando i dati della regione Lombardia sull’utenza del TPL \cite{statistiche}, si sono tratte le percentuali, su base anagrafica, della popolazione che usufruiscono di questi servizi.\\
+\begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+         | >{\centering\arraybackslash}X   
+         | >{\centering\arraybackslash}X 
+         | >{\centering\arraybackslash}X | }
+         \hline
+        Età &Percentuale \\
+         \noalign{\hrule height 1.2pt} 
+         4-14& 2,2\\
+          \hline
+15-24 &12 \\
+\hline
+25-64 &78,3 \\
+\hline
+64-100& 7,5 \\
+\hline
+\end{tabularx}
+\caption{Percentuale fasce popolazione}
+\end{table}
+Per completare il quadro, si è posta l’attenzione sulle percentuali che riguardano l’acquisto delle tipologie di abbonamento.
+\
+\begin{table}
+\begin{tabularx}{1\textwidth} {
+         | >{\centering\arraybackslash}X   
+         | >{\centering\arraybackslash}X 
+         | >{\centering\arraybackslash}X | }
+         \hline
+        Tipologia di tariffa &Percentuale \\
+         \noalign{\hrule height 1.2pt}        
+Abbonamento settimanale &10 \\
+\hline
+Abbonamento mensile &40\\ 
+\hline 
+Abbonamento annuale& 30 \\
+\hline
+Biglietto singolo &20 \\
+\hline
+\end{tabularx}
+\caption{Percentuali tipologie tariffarie}
+\end{table}
+\
+Si ipotizza l’acquisto del biglietto di A/R nel caso la scelta ricada sul viaggio singolo.
+Si assume inoltre che l’abbonamento mensile sia mediamente acquistato per dieci mesi/anno e quello settimanale per quaranta settimane/anno.\\
+Sulla base di quanto detto si calcolano i seguenti ricavi.\\
+ 
+ \begin{table}[H]
+\begin{tabularx}{1\textwidth} {
+         | >{\centering\arraybackslash}X   
+         | >{\centering\arraybackslash}X 
+         | >{\centering\arraybackslash}X | }
+         \hline
+         \multirow{2}{*}{Biglietto singolo}&Biglietto singolo standard&2'157\euro/giorno\\
+         \cline{2-3}
+         &Biglietto singolo ridotto& 460 \euro/giorno\\
+       \cline{2-3}
+    &TOTALE ANNUO &955'205 \euro/anno\\
+    \hline
+     \multirow{2}{*}{Abbonamento settimanale}&Abbonamento settimanale standard&863\euro/giorno\\
+     \cline{2-3}
+     &Abbonamento settimanale ridotto &184 \euro/giorno \\
+     \cline{2-3}
+     &TOTALE ANNUO &382'155 euro/anno\\
+     \hline
+     \multirow{2}{*}{Abbonamento mensile}&Abbonamento mensile standard&2'588\euro/giorno\\
+     \cline{2-3}
+     &Abbonamento mensile ridotto &551 \euro/giorno \\
+     \cline{2-3}
+     &TOTALE ANNUO &1'145'735 \euro/anno\\
+     \hline  
+     \multirow{2}{*}{Abbonamento annuale}&Abbonamento annuale standard&1'618\euro/giorno\\
+     \cline{2-3}
+     &Abbonamento annuale ridotto &345 \euro/giorno \\
+     \cline{2-3}
+     &TOTALE ANNUO &716'495 \euro/anno\\
+     \hline    
+     TOTALE RICAVI ANNO & \multicolumn{2}{|c|}{\textbf{ 3'199'590,00 \euro/anno} }\\ 
+     \hline
+     \end{tabularx}
+         \caption{Ricavi annuali}
+         \end{table}
+\newpage
+Inoltre, si sono presi in considerazione gli introiti pubblicitari: per la pubblicità esposta nella singola pensilina il ricavo è di 1'500 \euro/mese e vale per entrambe le tipologie di servizio.\\
+Per quanto riguarda la pubblicità sul singolo bus il ricavo è 5'000 euro/mese. Infine, per il singolo tram il ricavo è 8'000 \euro/mese. Ne derivano i ricavi riportati nelle seguenti tabelle. \cite{pubblicita} \\
+ \
+\begin{table}[H]
+\begin{minipage}{0.5\textwidth}
+\begin{tabularx}{1\textwidth} {
+         | >{\centering\arraybackslash}X   
+         | >{\centering\arraybackslash}X 
+         | >{\centering\arraybackslash}X | }
+         \hline
+        N. pensiline &N. vetture& TOTALE\\
+        \hline
+17 &4& 57'500,00 \euro/mese\\
+\hline
+TOTALE & \multicolumn{2}{|c|}{\textbf{ 690'000,00 \euro/anno } }\\ 
+\hline
+\end{tabularx}
+\caption{Entrate pubblicità Tram}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\begin{tabularx}{1\textwidth} {
+         | >{\centering\arraybackslash}X   
+         | >{\centering\arraybackslash}X 
+         | >{\centering\arraybackslash}X | }
+         \hline
+        N. pensiline &N. vetture& TOTALE\\
+        \hline
+      22 &8& 73'000,00 \euro/mese\\
+\hline
+TOTALE & \multicolumn{2}{|c|}{\textbf{ 876'000,00 \euro/anno } }\\ 
+\hline
+\end{tabularx}
+\caption{Entrate pubblicità bus}
+\end{minipage}
+\end{table}
+\
+\subsection{Profitto}
+Attraverso i valori riportati nei paragrafi precedenti (7.1-7.2-7.3-7.4), si è calcolato il profitto generato dal servizio, sia per quanto riguarda il tram sia per quanto riguarda l'autobus.\\
+
+\begin{table}[H]
+\begin{minipage}{0.5\textwidth}
+\begin{tabularx}{1\textwidth} {
+         | >{\centering\arraybackslash}X   
+         | >{\centering\arraybackslash}X 
+         | >{\centering\arraybackslash}X | }
+         \hline
+        Costi &4'849'331,07 \euro \\
+        \hline
+Ricavi & 3'899'250,47 \euro\\
+\hline
+Disavanzo & \textcolor{Red}{\textbf{ 950'080,60 \euro } }\\ 
+\hline
+\end{tabularx}
+\caption{Profitto Tram}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\begin{tabularx}{1\textwidth} {
+         | >{\centering\arraybackslash}X   
+         | >{\centering\arraybackslash}X 
+         | >{\centering\arraybackslash}X | }
+         \hline
+        Costi &2'760'610,08 \euro \\
+        \hline
+Ricavi & 4'075'545,47  \euro\\
+\hline
+Profitto & \textcolor{Green}{\textbf{ 1'314'935,39 \euro } }\\ 
+\hline
+\end{tabularx}
+\caption{Profitto Bus}
+\end{minipage}
+\end{table}
+\
+Come è possibile osservare nelle tabelle sopra riportate, il servizio tramviario presenta un disavanzo di 950'080,60 \euro/anno, mentre l'autolinea presenta un profitto di 1'314'935,39 \euro/anno.
+
+\newpage
+\section{Conclusioni}
+In relazione ai risultati ottenuti, il servizio tramviario mostra un disavanzo. Vista la sua utilità sociale, potrebbe essere preso in considerazione l'intervento delle istituzioni, con lo scopo di sanare tale deficit. Al fine di incentivare l'utilizzo del servizio, poi, si potrebbe considerare l'eventualità di ridurre il prezzo del biglietto intero da 4 a 3\euro, considerando però anche l'incremento dell'onere a carico dello Stato.\\
+Si sottolinea come il tempo di viaggio risulti essere competitivo, essendo l'infrastruttura in sede propria ed evitando quindi le interazioni con altri veicoli. L'introduzione del servizio tramviario porterebbe, inoltre, molti benefici. Tra questi vi è un miglioramento della qualità dell'aria, dato che numerosi utenti sarebbero disposti a ridurre l'uso dell'autovettura privata. Oltre a ciò, nella valle si ridurrebbero notevolmente i fenomeni di congestione, ci sarebbe una riduzione dell'inquinamento acustico ad opera del traffico e, non trascurabile, ci sarebbe un incremento della sicurezza.\\
+Il principale aspetto negativo della tramvia, indipendentemente dal risultato economico, è sicuramente l'impatto ambientale, dato che la linea verrebbe realizzata dove oggi sono presenti prati e campi.\\
+Per quanto riguarda l'autolinea, invece, il servizio mostra un profitto. In questo caso si potrebbe anche considerare di ridurre il prezzo del biglietto intero da 4 a 3\euro, perché comunque si avrebbe un utile annuo di 515'049,02\euro. 
+Oltre ai benefici citati in precedenza per il tram, in questo caso si aggiungerebbe anche la celerità di realizzazione del servizio, che nel caso della tramvia, invece, richiederebbe alcuni anni. Il tempo di viaggio, però, risulta essere lo stesso dell'autovettura privata, dato che il servizio interessa la statale 394. Infine, un aspetto di cui bisogna tener conto, è che gli autobus elettrici hanno una vita utile più breve rispetto ai tram.\\
+A fronte di ciò, si rilascia la scelta tra i due servizi al decisore politico.
+\newpage
+
+\begin{thebibliography}{99}
+\bibitem{wiki}
+\textit{https://it.wikipedia.org/wiki/Tranvia della Valcuvia}
+\bibitem{gmaps}
+\textit{google.com/maps}
+\bibitem{tsr}
+\textit{https://www.e-borghi.com/it/borgo/Varese/427/laveno}
+\bibitem{tilo}
+\textit{https://delta-november.it/treni/stazione\textunderscore luino/}
+\bibitem{orm}
+\textit{https://www.openrailwaymap.org}
+\bibitem{va}
+\textit{https://www.ctpi.it/}
+\bibitem{citadis}
+\textit{https://www.alstom.com/sites/alstom.com/files/2021/09/17/Alstom\textunderscore Product\textunderscore Sheet\textunderscore Citadis\textunderscore X05\textunderscore EN\textunderscore0.pdf}
+\bibitem{citaro}
+\textit{https://www.mercedes-benz-bus.com/it\textunderscore CH/models/ecitaro/facts/technical-data.html}
+\bibitem{preziario}
+\textit{Preziario\textunderscore edizione\textunderscore gennaio \textunderscore 2022, Regione Lombardia}
+\bibitem{costotram}
+\textit{http://www.mondotram.it/un\textunderscore tram\textunderscore per\textunderscore genova}
+\bibitem{banchine}
+\textit{TAVOLA E - COMPUTO METRICO ESTIMATIVO.pdf, comune di Riva Presso Chieri, Città metropolitana di Torino, Regione Piemonte}
+\bibitem{pensilina}
+\textit{https://www.holity.com/catalogsearch/result/?q=pensilina }
+\bibitem{biglietteria}
+\textit{https://italian.alibaba.com/product-detail/vending-machine-price-ticket-vending-machine-60029970883.html }
+\bibitem{pulizia}
+\textit{https://www.untramperbologna.it/wp-content/uploads/documenti-ufficiali/linea-rossa/00\textunderscore elaborati-generali/B381-SF-GPR-RD002B.pdf}
+\bibitem{agente}
+\textit{https://iltuosalario.it/carriera/italia-professioni-e-stipendi/italia-frenatori-segnalatori-e-agenti-di-manovra-ferroviari}
+\bibitem{responsabile}
+\textit{https://it.talent.com/salary?job=responsabile+ufficio+tecnico}
+\bibitem{autista}
+\textit{https://www.jobbydoo.it/stipendio/autista-autobus}
+\bibitem{trenord}
+\textit{https://trenord-europe-trenord-endpoint-prd.azureedge.net/fileadmin/contenuti/TRENORD/4-Info\textunderscore e\textunderscore assistenza/Informazioni\textunderscore utili/\\
+Condizioni\textunderscore di\textunderscore trasporto/Condizioni\textunderscore di\textunderscore trasporto\textunderscore IN\textunderscore VIGORE\textunderscore/tariffario\textunderscore01.09.21\textunderscore compressed.pdf }
+\bibitem{statistiche}
+\textit{https://www.polis.lombardia.it/wps/wcm/connect/36670df3-3544-45d2-912b-1aa87958a3ed/200410TER\textunderscore TPL\textunderscore CustomerSatisfaction+2020\textunderscore21+RF\textunderscore edgiugno2021\textunderscore pubb.pdf\\
+MOD=AJPERES\&CACHEID=ROOTWORKSPACE-36670df3-3544-45d2-912b-1aa87958a3ed-nHiX3dX }
+\bibitem{pubblicita}
+\textit{https://www.idearecommunication.it/cartelloni-pubblicitari/}
+
+
+
+
+
+\end{thebibliography}
+\end{document}
